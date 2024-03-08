@@ -47,8 +47,9 @@ dcl-proc insertSql;
     end-pi;
 
     //insert
-    exec sql insert into STUXXSC.TOKTAB (TKBANG,TKNAKJ,TKGURT)
-        values(:#TKBNG, :#TOKKJ, :#TKURT);
+    //insertのSQLを追加してください。
+    //追加行　exec sql insert into ・・・
+    
     dsplay_message = 'INSERT:SQLSTATE = ' + SQLSTATE + ':TKBANG:'+ #TKBNG;
     return dsplay_message;
 
@@ -80,9 +81,8 @@ dcl-proc updateSql;
     end-pi;
 
     //update
-    exec sql update STUXXSC.TOKTAB
-        set TKNAKJ  = :#TOKKJ, TKGURT = :#TKURT
-        where TKBANG = :#TKBNG;
+    //updateのSQLを追加してください。
+    //追加行　exec sql update ・・・
 
     dsplay_message = 'UPDATE:SQLSTATE = ' + SQLSTATE + ':TKBANG:'+ #TKBNG;
     return dsplay_message;
@@ -98,7 +98,7 @@ dcl-proc deleteSql;
         
     //delete
     exec sql delete STUXXSC.TOKTAB
-        where TKBANG = :#TKBNG;    
+        where TKBANG = :#TKBNG;
 
     dsplay_message = 'DELETE:SQLSTATE = ' + SQLSTATE + ':TKBANG:'+ #TKBNG;
     return dsplay_message;

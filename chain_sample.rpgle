@@ -15,7 +15,7 @@ dcl-proc    main;
     end-pi;
 
     //レコード様式をTOKTAB→TOKMSRへRENAME
-    dcl-f TOKTAB disk usage(*update) keyed rename(TOKTAB:TOKMSR) ; 
+    dcl-f TOKTAB disk usage(*update) keyed rename(TOKTAB:TOKMSR); 
 
     dcl-ds  customer likerec(TOKMSR:*all);
 

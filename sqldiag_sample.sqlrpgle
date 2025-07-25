@@ -6,8 +6,8 @@ ctl-opt dftactgrp(*no) main(main);
 // CALL PGM(XXXLIB/SQLDIAG) PARM(('12345' (*CHAR 5)) ('虎ノ門太郎' (*CHAR 50))) 
 //
 // 概要：
-// このプログラムは、指定された得意先番号（#PTKBAN）より大きい得意先の
-// 得意先名漢字（TKNAKJ）を指定された値（#PTOKKJ）に一括更新します。
+// このプログラムは、指定された得意先番号（p_tokuisaki_number）より大きい得意先の
+// 得意先名漢字（TKNAKJ）を指定された値（p_tokuisaki_name_kanji）に一括更新します。
 // 更新後、GET DIAGNOSTICS を使って実行結果の詳細情報を取得・表示します。
 //
 // 目的：
@@ -23,8 +23,8 @@ dcl-proc main;
 
     // パラメータ定義
     dcl-pi *n;
-        #PTKBAN char(5);// 得意先番号（更新対象の下限）
-        #PTOKKJ char(50);// 新しい得意先名漢字
+        p_tokuisaki_number char(5);// 得意先番号（更新対象の下限）
+        p_tokuisaki_name_kanji char(50);// 新しい得意先名漢字
     end-pi;
 
     // 変数定義（GET DIAGNOSTICS 用）
@@ -38,8 +38,8 @@ dcl-proc main;
     //UPDATE文を実行
     exec sql
         UPDATE TOKTABUPD
-        SET TKNAKJ = :#PTOKKJ
-        WHERE TKBANG > :#PTKBAN;
+        SET TKNAKJ = :p_tokuisaki_name_kanji
+        WHERE TKBANG > :p_tokuisaki_number;
     
         // GET DIAGNOSTICS文で実行結果の詳細を取得
         //■コーディングしてみましょう。

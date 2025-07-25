@@ -10,23 +10,23 @@ ctl-opt dftactgrp(*no)  main(main);
 dcl-proc    main;
     //parameters
     dcl-pi *n;
-        #PTKBAN char(5);//得意先番号
-        #PTOKKJ char(50);//得意先名漢字
+        p_tokuisaki_number char(5);//得意先番号
+        p_tokuisaki_name_kanji char(50);//得意先名漢字
     end-pi;
 
     //レコード様式をTOKTAB→TOKMSRへRENAME
     dcl-f TOKTAB disk usage(*update) keyed rename(TOKTAB:TOKMSR); 
 
-    dcl-ds  customer likerec(TOKMSR:*all);
+    dcl-ds  ds_customer likerec(TOKMSR:*all);
 
     dcl-s dsply_message	varchar(52);
 
-    chain #PTKBAN TOKTAB customer;
+    chain p_tokuisaki_number TOKTAB ds_customer;
     if %found(TOKTAB);
-        dsply   ('B:'+ customer.TKNAKJ);//更新前の得意先名漢字
-        customer.TKNAKJ = #PTOKKJ;
-        update  TOKMSR customer;
-        dsply   ('A:'+ customer.TKNAKJ);//更新後の得意先名漢字
+        dsply   ('B:'+ ds_customer.TKNAKJ);//更新前の得意先名漢字
+        ds_customer.TKNAKJ = p_tokuisaki_name_kanji;
+        update  TOKMSR ds_customer;
+        dsply   ('A:'+ ds_customer.TKNAKJ);//更新後の得意先名漢字
     else;
         dsply_message = 'Not found';
         dsply   dsply_message;

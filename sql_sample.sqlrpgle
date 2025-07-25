@@ -13,25 +13,25 @@ dcl-s dsplay_message  char(52);
 dcl-proc main;
     //parameters
     dcl-pi *N;
-        #PKBN   char(1);
-        #PTKBAN char(5);
-        #PTOKKJ char(50);
-        #PTKURT packed(9:0);
+        p_kubun   char(1);
+        p_tokuisaki_number char(5);
+        p_tokuisaki_name_kanji char(50);
+        p_tokuisaki_uriage packed(9:0);
     end-pi;    
 
     select;
-    when #PKBN = 'C';
+    when p_kubun = 'C';
         dsply   'Insert Start';
-        dsply   insertSql(#PTKBAN : #PTOKKJ : #PTKURT);
-    when #PKBN = 'R';
+        dsply   insertSql(p_tokuisaki_number : p_tokuisaki_name_kanji : p_tokuisaki_uriage);
+    when p_kubun = 'R';
         dsply   'Select Start';
-        dsply   selectSql(#PTKBAN);
-    when #PKBN = 'U';
+        dsply   selectSql(p_tokuisaki_number);
+    when p_kubun = 'U';
         dsply   'Update Start';
-        dsply   updateSql(#PTKBAN : #PTOKKJ : #PTKURT);
-    when #PKBN = 'D';
+        dsply   updateSql(p_tokuisaki_number : p_tokuisaki_name_kanji : p_tokuisaki_uriage);
+    when p_kubun = 'D';
         dsply   'Delete Start';
-        dsply   deleteSql(#PTKBAN);
+        dsply   deleteSql(p_tokuisaki_number);
     other;
         dsply 'Please enter [C R U D]';
     endsl;
@@ -41,16 +41,16 @@ end-proc;
 dcl-proc insertSql;
 
     dcl-pi *n varchar(52);
-        #TKBNG  char(5) value;
-        #TOKKJ char(50) value;
-        #TKURT packed(9:0) value;
+        pi_tokuisaki_number  char(5) value;
+        #pi_tokuisaki_name_kanji char(50) value;
+        pi_tokuisaki_uriage packed(9:0) value;
     end-pi;
 
     //insert
     //insertのSQLを追加してください。
     //追加行　exec sql insert into ・・・
     
-    dsplay_message = 'INSERT:SQLSTATE = ' + SQLSTATE + ':TKBANG:'+ #TKBNG;
+    dsplay_message = 'INSERT:SQLSTATE = ' + SQLSTATE + ':TKBANG:'+ pi_tokuisaki_number;
     return dsplay_message;
 
 end-proc;
@@ -58,16 +58,16 @@ end-proc;
 dcl-proc selectSql;
 
     dcl-pi *n varchar(52);
-        #TKBNG  char(5) value;
+        pi_tokuisaki_number  char(5) value;
     end-pi;
         
     //select to insert
     exec sql insert into STUXXSC.TOKTAB2 (TKBANG,TKNAKJ,TKGURT)
         select TKBANG,TKNAKJ ,TKGURT
         from STUXXSC.TOKTAB
-        where TKBANG = :#TKBNG;
+        where TKBANG = :pi_tokuisaki_number;
 
-    dsplay_message = 'SELECT:SQLSTATE = ' + SQLSTATE + ':TKBANG:'+ #TKBNG;
+    dsplay_message = 'SELECT:SQLSTATE = ' + SQLSTATE + ':TKBANG:'+ pi_tokuisaki_number;
     return dsplay_message;
 
 end-proc;
@@ -75,16 +75,16 @@ end-proc;
 dcl-proc updateSql;
 
     dcl-pi *n varchar(52);
-        #TKBNG  char(5) value;
-        #TOKKJ char(50) value;
-        #TKURT packed(9:0) value;
+        pi_tokuisaki_number  char(5) value;
+        #pi_tokuisaki_name_kanji char(50) value;
+        pi_tokuisaki_uriage packed(9:0) value;
     end-pi;
 
     //update
     //updateのSQLを追加してください。
     //追加行　exec sql update ・・・
 
-    dsplay_message = 'UPDATE:SQLSTATE = ' + SQLSTATE + ':TKBANG:'+ #TKBNG;
+    dsplay_message = 'UPDATE:SQLSTATE = ' + SQLSTATE + ':TKBANG:'+ pi_tokuisaki_number;
     return dsplay_message;
 
 end-proc;
@@ -93,14 +93,14 @@ end-proc;
 dcl-proc deleteSql;
 
     dcl-pi *n varchar(52);
-        #TKBNG  char(5) value;
+        pi_tokuisaki_number  char(5) value;
     end-pi;
         
     //delete
     exec sql delete STUXXSC.TOKTAB
-        where TKBANG = :#TKBNG;
+        where TKBANG = :pi_tokuisaki_number;
 
-    dsplay_message = 'DELETE:SQLSTATE = ' + SQLSTATE + ':TKBANG:'+ #TKBNG;
+    dsplay_message = 'DELETE:SQLSTATE = ' + SQLSTATE + ':TKBANG:'+ pi_tokuisaki_number;
     return dsplay_message;
 
 end-proc;

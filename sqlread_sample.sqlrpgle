@@ -4,8 +4,8 @@
 // sqlread.rpgle
 // CALL PGM(XXXLIB/SQLREAD) PARM(('12345' (*CHAR 5)) ('虎ノ門太郎' (*CHAR 50))) 
 // 概要：
-// 指定された得意先番号（#PTKBAN）より大きい得意先の得意先名漢字（TKNAKJ）を、
-// 指定された値（#PTOKKJ）に一括更新します。
+// 指定された得意先番号（p_tokuisaki_number）より大きい得意先の得意先名漢字（TKNAKJ）を、
+// 指定された値（p_tokuisaki_name_kanji）に一括更新します。
 //
 // 注意：
 // ・TOKTABUPDファイルは、TKBANGが主キーの更新可能ファイルです。
@@ -16,15 +16,15 @@ ctl-opt dftactgrp(*no) main(main);
 
 dcl-proc main;
   dcl-pi *n;
-    #PTKBAN char(5);//得意先番号
-    #PTOKKJ char(50);//得意先名漢字
+    p_tokuisaki_number char(5);//得意先番号
+    p_tokuisaki_name_kanji char(50);//得意先名漢字
   end-pi;
 
   
   //■コーディングしてみましょう。
   // 以下のUPDATE文を完成させてください。
-  // ・更新対象：TKBANG > #PTKBAN のレコード
-  // ・更新内容：TKNAKJ を #PTOKKJ 
+  // ・更新対象：TKBANG > p_tokuisaki_number のレコード
+  // ・更新内容：TKNAKJ を p_tokuisaki_name_kanji 
   exec sql
   //↓ここにSQL文を記述
   //UPDATE TOKTABUPD…
